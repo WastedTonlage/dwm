@@ -199,6 +199,7 @@ static void sendmon(Client *c, Monitor *m);
 static void setclientstate(Client *c, long state);
 static void setfocus(Client *c);
 static void setfullscreen(Client *c, int fullscreen);
+static void togglefullscreen(const Arg *arg);
 static void setlayout(const Arg *arg);
 static void setmfact(const Arg *arg);
 static void setup(void);
@@ -2122,6 +2123,13 @@ zoom(const Arg *arg)
 		if (!c || !(c = nexttiled(c->next)))
 			return;
 	pop(c);
+}
+
+void
+togglefullscreen(const Arg *arg) 
+{
+	if (!selmon->sel) return;
+	setfullscreen(selmon->sel, !selmon->sel->isfullscreen);
 }
 
 int
