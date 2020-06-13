@@ -1,0 +1,10 @@
+# Clang
+.clangd/
+compile_commands.json
+
+# Compiled files
+dwm.o
+drw.o
+util.o
+dwm
+
