@@ -42,7 +42,8 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+	{ "Gimp",       NULL,       NULL,       0,            1,           -1 },
+	{ "Ghidra",     NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -53,9 +54,9 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 #include "fibonacci.c"
 static const Layout layouts[] = {
 	/* symbol     arrange function */
- 	{ "[@]",      spiral },
+ 	{ "[@]",      spiral },   /* first entry is default */
  	{ "[\\]",     dwindle },
-	{ "[]=",      tile },    /* first entry is default */
+	{ "[]=",      tile },    
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
@@ -73,34 +74,44 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "konsole", NULL };
-static const char *musicdcmd[] = {"musicd", "playtag", NULL};
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_red, "-sf", col_gray4, NULL };
+static const char *termcmd[]  = { "alacritty", NULL };
+static const char *musicdcmd_tag[] = {"musicd", "playtag", NULL};
+static const char *musicdcmd_song[] = {"musicd", "play", NULL};
+static const char *pausecmd[] = {"musicd", "pause", NULL};
+static const char *nextcmd[] = {"musicd", "next", NULL};
 static const char *browsercmd[] = {"firefox", NULL};
+static const char *privatecmd[] = {"firefox", "-private", NULL};
+static const char *torbrowsercmd[] = {"tor-browser", NULL};
+static const char *mixercmd[] = {"pavucontrol-qt", NULL};
+static const char *reloadcmd[] = {"reload-dwm", NULL};
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY,						XK_aring,  spawn,          {.v = musicdcmd}},
+	{ MODKEY,						XK_aring,  spawn,          {.v = musicdcmd_tag}},
+	{ MODKEY,						XK_dead_diaeresis,  spawn, {.v = musicdcmd_song}},
+	{ MODKEY,						XK_space,  spawn,          {.v = pausecmd}},
+	{ MODKEY,						XK_Right,  spawn,          {.v = nextcmd}},
 	{ MODKEY,						XK_b,      spawn,          {.v = browsercmd}},
+	{ MODKEY,						XK_p,      spawn,          {.v = privatecmd}},
+	{ MODKEY,						XK_t,      spawn,          {.v = torbrowsercmd}},
+	{ MODKEY,						XK_a,      spawn,          {.v = mixercmd}},
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY,						XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_f,      togglefullscreen,{0} },
-	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
 	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY          ,             XK_r,      quit,           {0} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -119,10 +130,8 @@ static Button buttons[] = {
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
-	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
-	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
-	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
+	{ ClkClientWin,         MODKEY,         Button2,        killclient,    {0} },
+	{ ClkClientWin,         MODKEY,         Button3,        zoom,           {0} },
 	{ ClkTagBar,            0,              Button1,        view,           {0} },
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
