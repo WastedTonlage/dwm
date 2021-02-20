@@ -29,8 +29,8 @@ static const char col_black[]            = "#000000";
 static const char col_white[]            = "#ffffff";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { gruvbox_fg1, gruvbox_bg1, col_white },
-	[SchemeSel]  = { gruvbox_yellow_light, gruvbox_bg2,  col_black },
+	[SchemeNorm] = { gruvbox_fg1, gruvbox_bg1, gruvbox_orange_dark  },
+	[SchemeSel]  = { gruvbox_yellow_light, gruvbox_bg2, gruvbox_yellow_light  },
 };
 
 /* tagging */
