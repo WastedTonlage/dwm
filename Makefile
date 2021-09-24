@@ -6,8 +6,8 @@ include config.mk
 SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
 
-CFLAGS += -Wunused-function
-CFLAGS += -Wunused-variable
+CFLAGS += -Wnounused-function
+CFLAGS += -Wnounused-variable
 
 all: options dwm
 
