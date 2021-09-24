@@ -7,6 +7,7 @@ SRC = drw.c dwm.c util.c
 OBJ = ${SRC:.c=.o}
 
 CFLAGS += -Wunused-function
+CFLAGS += -Wunused-variable
 
 all: options dwm
 
@@ -39,9 +40,12 @@ dist: clean
 	rm -rf dwm-${VERSION}
 
 install: all
-	mkdir -p /home/tonlage/Puters/bin
-	cp -f dwm /home/tonlage/Puters/bin
-	chmod 755 /home/tonlage/Puters/bin/dwm
+	mkdir -p ${DESTDIR}${PREFIX}/bin
+	cp -f dwm ${DESTDIR}${PREFIX}/bin
+	chmod 755 ${DESTDIR}${PREFIX}/bin/dwm
+	mkdir -p ${DESTDIR}${MANPREFIX}/man1
+	sed "s/VERSION/${VERSION}/g" < dwm.1 > ${DESTDIR}${MANPREFIX}/man1/dwm.1
+	chmod 644 ${DESTDIR}${MANPREFIX}/man1/dwm.1
 
 uninstall:
 	rm -f ${DESTDIR}${PREFIX}/bin/dwm\
