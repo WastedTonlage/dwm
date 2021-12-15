@@ -8,3 +8,5 @@ drw.o
 util.o
 dwm
 
+# Nix
+result

@@ -10,9 +10,13 @@
     let
       pkgs = nixpkgs.legacyPackages."${system}";
     in {
-      defaultPackage = mkDerivation {
+      defaultPackage = pkgs.stdenv.mkDerivation {
         name = "dwm";
         src = ./.;
+
+        nativeBuildInputs = with pkgs; [
+          xorg.libX11 xorg.libX11.dev xorg.libXft xorg.libXinerama
+        ];
       };
-    }; in with utils.lib; eachSystem defaultSystem out;
+    }; in with utils.lib; eachSystem defaultSystems out;
 }
