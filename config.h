@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const int gappx              = 15;       /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -18,6 +18,7 @@ static const char gruvbox_bg1[]          = "#3c3836";
 static const char gruvbox_fg4[]          = "#a89984";
 static const char gruvbox_fg2[]          = "#d5c4a1";
 static const char gruvbox_orange_dark[]  = "#d65d03";
+static const char gruvbox_green_dark[]   = "#98971a";
 static const char gruvbox_gray[]         = "#928374";
 static const char gruvbox_fg0[]          = "#fbf1c7";
 static const char gruvbox_bg4[]          = "#7c6f63";
@@ -29,7 +30,7 @@ static const char col_black[]            = "#000000";
 static const char col_white[]            = "#ffffff";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { gruvbox_fg1, gruvbox_bg1, gruvbox_orange_dark  },
+	[SchemeNorm] = { gruvbox_fg1, gruvbox_bg1, gruvbox_green_dark  },
 	[SchemeSel]  = { gruvbox_yellow_light, gruvbox_bg2, gruvbox_yellow_light  },
 };
 
